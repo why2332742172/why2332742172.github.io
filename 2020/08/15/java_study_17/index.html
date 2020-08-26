@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1.0.2/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="JAVA学习笔记17-（异常）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA学习笔记17-（异常）">
+<meta property="og:url" content="http://yoursite.com/2020/08/15/java_study_17/index.html">
+<meta property="og:site_name" content="WhyBlog">
+<meta property="og:description" content="JAVA学习笔记17-（异常）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200815171143275.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTQ0MzM1,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2020-08-14T23:30:22.000Z">
+<meta property="article:modified_time" content="2020-08-15T10:15:13.679Z">
+<meta property="article:author" content="WHY">
+<meta property="article:tag" content="code_study">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200815171143275.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTQ0MzM1,size_16,color_FFFFFF,t_70#pic_center">
+
+<link rel="canonical" href="http://yoursite.com/2020/08/15/java_study_17/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JAVA学习笔记17-（异常） | WhyBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">WhyBlog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">努力学习的宇雨的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8"><span class="nav-number">1.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">异常概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E7%9A%84%E7%BB%A7%E6%89%BF%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">异常的继承结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%97%B6%E5%BC%82%E5%B8%B8%E5%92%8C%E8%BF%90%E8%A1%8C%E6%97%B6%E5%BC%82%E5%B8%B8"><span class="nav-number">1.2.1.</span> <span class="nav-text">编译时异常和运行时异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%97%B6%E5%BC%82%E5%B8%B8%E5%92%8C%E8%BF%90%E8%A1%8C%E6%97%B6%E5%BC%82%E5%B8%B8%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">编译时异常和运行时异常的区别？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">异常的处理方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Throws%E5%90%91%E4%B8%8A%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8"><span class="nav-number">1.3.1.</span> <span class="nav-text">Throws向上抛出异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87try%C2%B7%C2%B7%C2%B7catch%E5%8E%BB%E6%8A%93%E5%8F%96%EF%BC%8C%E5%A4%84%E7%90%86%E5%BC%82%E5%B8%B8"><span class="nav-number">1.3.2.</span> <span class="nav-text">通过try···catch去抓取，处理异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5try-catch"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">深入try..catch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#try-catch%E4%B8%AD%E7%9A%84finally%E5%AD%90%E5%8F%A5"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">try..catch中的finally子句</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#final-finally-finalize"><span class="nav-number">1.3.2.2.1.</span> <span class="nav-text">final finally finalize</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8Etry%C2%B7%C2%B7%C2%B7catch%E7%9A%84%E5%A5%87%E6%80%AA%E9%A2%98%E7%9B%AE"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">一个关于try···catch的奇怪题目</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">异常对象的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%BC%82%E5%B8%B8%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.5.</span> <span class="nav-text">创建自己的异常对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E8%87%AA%E5%B7%B1%E5%88%9B%E5%BB%BA%E7%9A%84%E5%BC%82%E5%B8%B8"><span class="nav-number">1.5.1.</span> <span class="nav-text">利用自己创建的异常</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E8%A6%86%E7%9B%96%E4%B8%8E%E5%BC%82%E5%B8%B8"><span class="nav-number">1.6.</span> <span class="nav-text">方法覆盖与异常</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+  <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=27588021&auto=1&height=66"></iframe>
+      </iframe>
+  </div>
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WHY"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">WHY</p>
+  <div class="site-description" itemprop="description">努力学习的宇雨的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/why2332742172" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;why2332742172" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2332742172@qq.com" title="E-Mail → mailto:2332742172@qq.com" rel="noopener" target="_blank"><i class="fab fa-envelope-o fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_46144335" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_46144335" rel="noopener" target="_blank"><i class="fab fa-delicious fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/15/java_study_17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="WHY">
+      <meta itemprop="description" content="努力学习的宇雨的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WhyBlog">
+    </span>
+
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JAVA学习笔记17-（异常）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-08-15 07:30:22 / 修改时间：18:15:13" itemprop="dateCreated datePublished" datetime="2020-08-15T07:30:22+08:00">2020-08-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">JAVA学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>JAVA学习笔记17-（异常）</p>
+<a id="more"></a>
+
+
+
+<hr>
+<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>异常是java中一个非常有用的机制，能够让程序员快速定位问题所在并对其进行修改，也能去提醒使用者所出现的错误等等。</p>
+<hr>
+<h2 id="异常概述"><a href="#异常概述" class="headerlink" title="异常概述"></a>异常概述</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">什么是异常，java提供异常处理机制有什么用？</span><br><span class="line">	以下程序执行过程中发生了不正常的情况，而这种不正常的情况叫做：异常</span><br><span class="line">    java语言是很完善的语言，提供了异常的处理方式，以下程序执行过程中出现了不正常情况，</span><br><span class="line">    java把该异常信息打印输出到控制台，供程序员参考。程序员看到异常信息之后，可以对</span><br><span class="line">    程序进行修改，让程序更加的健壮。</span><br><span class="line"></span><br><span class="line">    什么是异常：程序执行过程中的不正常情况。</span><br><span class="line">    异常的作用：增强程序的健壮性。</span><br></pre></td></tr></table></figure>
+<p>例如在下面代码中，我们尝试去用10除以0，会触发一个异常：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        实际上JVM在执行到此处的时候，会<span class="keyword">new</span>异常对象：<span class="keyword">new</span> ArithmeticException(<span class="string">&quot;/ by zero&quot;</span>);</span><br><span class="line">        并且JVM将<span class="keyword">new</span>的异常对象抛出，打印输出信息到控制台了。</span><br><span class="line">        <span class="keyword">int</span> c = a / b;</span><br><span class="line">        System.out.println(a + <span class="string">&quot;/&quot;</span> + b + <span class="string">&quot;=&quot;</span> + c);</span><br></pre></td></tr></table></figure>
+<p>这段代码触发异常后会在控制台输出如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> java.lang.ArithmeticException: / by zeroat com.bjpowernode.javase.exception.ExceptionTest01.main(ExceptionTest01.java:<span class="number">14</span>)</span><br><span class="line">这个信息被我们称为：异常信息。这个信息是JVM打印的。</span><br></pre></td></tr></table></figure>
+<p>这样，当程序员观察到异常之后，便可以对代码进行维护了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">if</span>(b == <span class="number">0</span>) &#123;</span><br><span class="line">	System.out.println(<span class="string">&quot;除数不能为0&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line">程序执行到此处表示除数一定不是<span class="number">0</span></span><br><span class="line"><span class="keyword">int</span> c = a / b;</span><br><span class="line">System.out.println(a + <span class="string">&quot;/&quot;</span> + b + <span class="string">&quot;=&quot;</span> + c);</span><br></pre></td></tr></table></figure>
+
+<p>java语言中异常是以什么形式存在的呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">异常在java中以类的形式存在，每一个异常类都可以创建异常对象。</span><br><span class="line">通过“异常类”实例化“异常对象”</span><br><span class="line">NumberFormatException nfe = <span class="keyword">new</span> NumberFormatException(<span class="string">&quot;数字格式化异常！&quot;</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(nfe);</span><br><span class="line">java.lang.NumberFormatException: 数字格式化异常！</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="异常的继承结构"><a href="#异常的继承结构" class="headerlink" title="异常的继承结构"></a>异常的继承结构</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">通过翻源代码或者API可以得知，异常的老祖宗也是Object</span><br><span class="line"></span><br><span class="line">往下则是Object下的一个Throwable（可抛出的）</span><br><span class="line"></span><br><span class="line">Throwable下有两个分支：Error（不可处理，直接退出JVM）和Exception（可处理的）</span><br><span class="line"></span><br><span class="line">Exception下有两个分支：</span><br><span class="line">	Exception的直接子类：编译时异常（要求程序员在编写程序阶段必须预先对这些异常进行处理，如果不处理编译器报错，因此得名编译时异常。）。</span><br><span class="line">	RuntimeException：运行时异常。（在编写程序阶段程序员可以预先处理，也可以不管，都行。）</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20200815171143275.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTQ0MzM1,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>该图仅是写出了大体的关系，当然JAVA中存在着很多的异常，具体详询API文档。<br>API链接: <a target="_blank" rel="noopener" href="https://www.apiref.com/java11-zh/index.html">JDK11版本</a>.<br>API链接: <a target="_blank" rel="noopener" href="https://www.matools.com/api/java8">JDK8版本</a>.</p>
+<hr>
+<h3 id="编译时异常和运行时异常"><a href="#编译时异常和运行时异常" class="headerlink" title="编译时异常和运行时异常"></a>编译时异常和运行时异常</h3><p>异常在Exception中又有Exception的直接子类和RuntimeException<br>分别为编译时异常和运行时异常。<br><strong>编译时异常和运行时异常，都是发生在运行阶段。</strong> 编译阶段异常是不会发生的，因为异常首先就是要创建异常对象！编译阶段是不会创建对象的！</p>
+<pre><code>编译时异常因为什么而得名？
+    因为编译时异常必须在编译(编写)阶段预先处理（通过throws或者try catch），如果不处理编译器报错，因此得名。
+    所有异常都是在运行阶段发生的。因为只有程序运行阶段才可以new对象。
+    因为异常的发生就是new异常对象。</code></pre>
+<hr>
+<h4 id="编译时异常和运行时异常的区别？"><a href="#编译时异常和运行时异常的区别？" class="headerlink" title="编译时异常和运行时异常的区别？"></a>编译时异常和运行时异常的区别？</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">编译时异常一般发生的概率比较高。</span><br><span class="line">对于一些发生概率较高的异常，需要在运行之前对其进行预处理。</span><br><span class="line">（例如你出门前看到要下雨了，带把伞，这就是对发生概率较高的异常的预处理。）</span><br><span class="line"></span><br><span class="line">运行时异常一般发生的概率比较低。</span><br><span class="line">所以一般不需要对其进行预处理，否则会太累</span><br><span class="line">（就像你出门前做好万全准备，防护到头发去预防全部可能出现的危险一样，</span><br><span class="line">但是有些危险很明显是可能性很小的，例如你出门被飞机砸到一样</span><br><span class="line">这些危险可以预防，但没必要。）</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>编译时异常还有其他名字：</p>
+<blockquote>
+<p>受检异常：CheckedException<br>受控异常</p>
+</blockquote>
+<p>运行时异常还有其它名字：</p>
+<blockquote>
+<p>未受检异常：UnCheckedException<br>非受控异常</p>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="异常的处理方式"><a href="#异常的处理方式" class="headerlink" title="异常的处理方式"></a>异常的处理方式</h2><p>在JAVA中对异常有两种处理方式：</p>
+<blockquote>
+<p>1、通过throws向上抛出异常<br>2、通过try···catch去抓取并处理异常</p>
+</blockquote>
+<p>关于此有个很形象的描述：<br>A在工作时由于异常操作导致公司亏损<br>他有两种方法去补救：<br>1、上报上级，交给他们解决。<br>2、自己掏腰包补偿亏损，这样只有他自己知道。</p>
+<p>当然如果上级上报上级，再上报上报···到最后就是上报到CEO处也无法解决时（throws到main方法还未解决异常），公司就倒闭了（程序停止运行）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">注意：</span><br><span class="line">编译时异常是必须去处理的，无论通过方式<span class="number">1</span>或者<span class="number">2</span></span><br><span class="line">但是运行时异常可以不用去写代码预处理，出了问题提示了再去处理也可</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Throws向上抛出异常"><a href="#Throws向上抛出异常" class="headerlink" title="Throws向上抛出异常"></a>Throws向上抛出异常</h3><p>处理异常的第一种方式：<br>在方法声明的位置上使用throws关键字抛出，谁调用我这个方法，我就抛给谁。抛给调用者来处理。<br>这种处理异常的态度：上报。<br>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">doSome</span><span class="params">()</span> <span class="keyword">throws</span> ClassNotFoundException</span>&#123;</span><br><span class="line">	System.out.println(<span class="string">&quot;doSome!!!!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">这个代码表示doSome()方法在执行过程中，有可能会出现ClassNotFoundException异常。</span><br><span class="line">在方法声明后面使用<span class="keyword">throws</span>关键字抛出，即可将异常抛给这个方法的调用者。</span><br></pre></td></tr></table></figure>
+<p>下面在main方法中调用这个方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">	doSome();</span><br><span class="line">	</span><br><span class="line">	这里要注意！doSome方法抛给你了一个异常，你就得对他处理！</span><br><span class="line">	同样，调用者有两种方式。<span class="keyword">throws</span>或者<span class="keyword">try</span> <span class="keyword">catch</span></span><br><span class="line">	也就是要么继续上报要么尝试解决。</span><br><span class="line">	但是main方法中不要上报！</span><br><span class="line">	main方法上报给了JVM，JVM只有终止程序的执行。</span><br><span class="line">	这与我们异常处理的初衷：增强程序的健壮性相违背。</span><br><span class="line">	我们希望的是在出现异常时能够解决并且不去影响程序的运行。</span><br><span class="line">	所以一般在main方法中就会用<span class="keyword">try</span> <span class="keyword">catch</span>去处理异常！</span><br><span class="line"></span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		doSome();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">		这行话意思是去打印堆错误信息，也就是提醒程序员错误。</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意：只要异常没有捕捉，采用上报的方式，此方法的后续代码不会执行。</p>
+<hr>
+<h3 id="通过try···catch去抓取，处理异常"><a href="#通过try···catch去抓取，处理异常" class="headerlink" title="通过try···catch去抓取，处理异常"></a>通过try···catch去抓取，处理异常</h3><p>处理异常的第二种方式：<br>使用try..catch语句对异常进行捕捉。<br>这个异常不会上报，自己把这个事儿处理了。<br>异常抛到此处为止，不再上抛了。<br>使用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> </span><br><span class="line">&#123;</span><br><span class="line">	doSome();</span><br><span class="line">	这里是先尝试去执行的语句</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">catch</span>(异常类型 自变量)&#123;&#125;</span><br><span class="line">这里是当抓取到异常时，注意抓取的异常类型必须是人家抛出的异常类型，</span><br><span class="line">不能人抛出了异常A,你却去<span class="keyword">catch</span>异常B</span><br><span class="line">当然你可以去<span class="keyword">catch</span>这个异常的父类，这是允许的，其实就是多态。</span><br><span class="line"></span><br><span class="line"><span class="keyword">catch</span> (ClassNotFoundException e) </span><br><span class="line">&#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">	这里调用了一个异常处理的方法，下面说。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>值得注意的是：<br>1、try语句块中的某一行出现异常，该行后面的代码不会执行。<br>2、try..catch捕捉异常之后，后续代码可以执行。<br>什么意思呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	doSome();</span><br><span class="line">	</span><br><span class="line">	当执行到doSome() 他抛出了一个异常ClassNotFoundException</span><br><span class="line">	这个时候就会转到<span class="keyword">catch</span>里面了，这下面的语句不会被执行！</span><br><span class="line">	</span><br><span class="line">	System.out.println(<span class="string">&quot;123&quot;</span>);这句话不会执行！</span><br><span class="line">&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">但是<span class="keyword">catch</span>完之后，这下面的会继续正常执行！这就保证了没影响程序的健壮性！即发生了异常也不影响我们程序的整体运行！</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">&quot;456&quot;</span>);这句话会执行！</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="深入try-catch"><a href="#深入try-catch" class="headerlink" title="深入try..catch"></a>深入try..catch</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、<span class="keyword">catch</span>后面的小括号中的类型可以是具体的异常类型，也可以是该异常类型的父类型。</span><br><span class="line"><span class="number">2</span>、<span class="keyword">catch</span>可以写多个。建议<span class="keyword">catch</span>的时候，精确的一个一个处理。这样有利于程序的调试。</span><br><span class="line"><span class="number">3</span>、<span class="keyword">catch</span>写多个的时候，从上到下，必须遵守从小到大。也就是得先子类型的异常，再父类型的异常</span><br><span class="line"><span class="number">4</span>、JDK8之后，<span class="keyword">catch</span>也可以这样写！</span><br><span class="line"><span class="keyword">catch</span>(FileNotFoundException | ArithmeticException | NullPointerException e) &#123;</span><br><span class="line">	System.out.println(<span class="string">&quot;文件不存在？数学异常？空指针异常？都有可能！&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="try-catch中的finally子句"><a href="#try-catch中的finally子句" class="headerlink" title="try..catch中的finally子句"></a>try..catch中的finally子句</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、在<span class="keyword">finally</span>子句中的代码是最后执行的，并且是一定会执行的，即使<span class="keyword">try</span>语句块中的代码出现了异常。</span><br><span class="line"><span class="keyword">finally</span>子句必须和<span class="keyword">try</span>一起出现，不能单独编写。</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、<span class="keyword">finally</span>语句通常使用在哪些情况下呢？</span><br><span class="line">通常在<span class="keyword">finally</span>语句块中完成资源的释放/关闭。</span><br><span class="line">因为<span class="keyword">finally</span>中的代码比较有保障。</span><br><span class="line">即使<span class="keyword">try</span>语句块中的代码出现异常，<span class="keyword">finally</span>中代码也会正常执行。</span><br></pre></td></tr></table></figure>
+<p>具体的语法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	···</span><br><span class="line">&#125;<span class="keyword">catch</span>()&#123;</span><br><span class="line">	···</span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">	···</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意点：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">放在<span class="keyword">finally</span>语句块中的代码是一定会执行的【再次强调！！！】</span><br><span class="line"><span class="keyword">try</span>和<span class="keyword">finally</span>，没有<span class="keyword">catch</span>可以吗？可以。</span><br><span class="line"><span class="keyword">try</span>不能单独使用。</span><br><span class="line"><span class="keyword">try</span> <span class="keyword">finally</span>可以联合使用。</span><br></pre></td></tr></table></figure>
+<p>如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	System.out.println(<span class="string">&quot;try...&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">	<span class="keyword">finally</span>中的语句会执行。能执行到。</span><br><span class="line">	System.out.println(<span class="string">&quot;finally...&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">以上代码的执行顺序：</span><br><span class="line">先执行<span class="keyword">try</span>...</span><br><span class="line">再执行<span class="keyword">finally</span>...</span><br><span class="line">最后执行 <span class="keyword">return</span> （<span class="keyword">return</span>语句只要执行方法必然结束。）</span><br></pre></td></tr></table></figure>
+<p>当然也有例外情况（也不算啦）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	System.out.println(<span class="string">&quot;try...&quot;</span>);</span><br><span class="line">	</span><br><span class="line">	退出JVM语句：</span><br><span class="line">	System.exit(<span class="number">0</span>);</span><br><span class="line">	退出JVM之后，<span class="keyword">finally</span>语句中的代码就不执行了！</span><br><span class="line">	</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">	System.out.println(<span class="string">&quot;finally...&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="final-finally-finalize"><a href="#final-finally-finalize" class="headerlink" title="final finally finalize"></a>final finally finalize</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">finally</span> finalize有什么区别？</span><br><span class="line">    <span class="keyword">final</span> 关键字</span><br><span class="line">        <span class="keyword">final</span>修饰的类无法继承</span><br><span class="line">        <span class="keyword">final</span>修饰的方法无法覆盖</span><br><span class="line">        <span class="keyword">final</span>修饰的变量不能重新赋值。</span><br><span class="line"></span><br><span class="line">    <span class="keyword">finally</span> 关键字</span><br><span class="line">        和<span class="keyword">try</span>一起联合使用。</span><br><span class="line">        <span class="keyword">finally</span>语句块中的代码是必须执行的。</span><br><span class="line"></span><br><span class="line">    finalize 标识符</span><br><span class="line">        是一个Object类中的方法名。</span><br><span class="line">        这个方法是由垃圾回收器GC负责调用的。</span><br></pre></td></tr></table></figure>
+<p>具体见前面的笔记。</p>
+<hr>
+<h4 id="一个关于try···catch的奇怪题目"><a href="#一个关于try···catch的奇怪题目" class="headerlink" title="一个关于try···catch的奇怪题目"></a>一个关于try···catch的奇怪题目</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">先定义这么一个方法m</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">m</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">100</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> i;</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">然后在主方法去调用这个方法</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> result = m();</span><br><span class="line">	System.out.println(result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">是不是会觉得打印出<span class="number">101</span>？因为<span class="keyword">finally</span>语句不是无论如何都会执行，且<span class="keyword">return</span>在最后执行吗？</span><br><span class="line">错了！打印答案是<span class="number">100</span>！！！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">我  也  傻  了</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">已知：</span><br><span class="line">java语法规则（有一些规则是不能破坏的，一旦这么说了，就必须这么做！）：</span><br><span class="line"></span><br><span class="line">java中有一条这样的规则：</span><br><span class="line">方法体中的代码必须遵循自上而下顺序依次逐行执行（亘古不变的语法！）</span><br><span class="line"></span><br><span class="line">java中还有一条语法规则：</span><br><span class="line"><span class="keyword">return</span>语句一旦执行，整个方法必须结束（亘古不变的语法！）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">再回过去看m方法</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">m</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">100</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> i;</span><br><span class="line">		这行代码出现在<span class="keyword">int</span> i = <span class="number">100</span>;的下面，所以最终结果必须是返回<span class="number">100</span></span><br><span class="line">		<span class="keyword">return</span>语句还必须保证是最后执行的。一旦执行，整个方法结束。</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">也就是说，finall的确也执行了</span><br><span class="line">但是由于<span class="keyword">return</span> i 这句的确就是在人机<span class="keyword">int</span> i = <span class="number">100</span>正下方</span><br><span class="line">所以就返回了<span class="number">100</span>！</span><br><span class="line"></span><br><span class="line">可以通过反编译其<span class="class"><span class="keyword">class</span>文件看到深处：</span></span><br><span class="line"><span class="class">反编译之后的效果</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">static</span> <span class="title">int</span> <span class="title">m</span>()</span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">int</span> j = i;</span><br><span class="line">    i++;的确他进行了<span class="keyword">finally</span>的语句，且在<span class="keyword">return</span>之前执行的</span><br><span class="line">    <span class="keyword">return</span> j;的确他也是按顺序直接返回了<span class="number">100</span></span><br><span class="line">    人家没毛病！</span><br><span class="line">&#125;</span><br><span class="line">所以这样JAVA就做到了不打自己脸（）</span><br><span class="line">就难为我呗</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="异常对象的方法"><a href="#异常对象的方法" class="headerlink" title="异常对象的方法"></a>异常对象的方法</h2><p>在try···catch语句中，我们在catch后括号中生命了个对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	doSome();</span><br><span class="line">&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">	这个e就是</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们自然可以通过他去调用方法！<br>异常对象有两个非常重要的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">获取异常简单的描述信息：</span><br><span class="line">String msg = exception.getMessage();</span><br><span class="line">System.out.println(msg);</span><br><span class="line"></span><br><span class="line">打印异常追踪的堆栈信息：</span><br><span class="line">exception.printStackTrace();</span><br></pre></td></tr></table></figure>
+
+<p>例如如下用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">NullPointerException e = <span class="keyword">new</span> NullPointerException(<span class="string">&quot;空指针异常12345&quot;</span>);</span><br><span class="line"></span><br><span class="line">获取异常简单描述信息：这个信息实际上就是构造方法上面String参数。</span><br><span class="line">String msg = e.getMessage(); </span><br><span class="line">System.out.println(msg);</span><br><span class="line">空指针异常<span class="number">12345</span></span><br><span class="line"></span><br><span class="line">打印异常堆栈信息</span><br><span class="line">java后台打印异常堆栈追踪信息的时候，采用了异步线程的方式打印的。</span><br><span class="line">e.printStackTrace();</span><br><span class="line">java.lang.NullPointerException: 空指针异常<span class="number">12345</span></span><br><span class="line">	at com.bjpowernode.javase.exception.ExceptionTest08.main(ExceptionTest08.java:<span class="number">15</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这两个方法都能帮助我们去快速的定位到异常所在，然后对其进行修改和维护。</p>
+<p>如何查看异常信息呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">异常信息追踪信息，从上往下一行一行看。</span><br><span class="line">但是需要注意的是：SUN写的代码就不用看了(看包名就知道是自己的还是SUN的。)。</span><br><span class="line">主要的问题是出现在自己编写的代码上。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="创建自己的异常对象"><a href="#创建自己的异常对象" class="headerlink" title="创建自己的异常对象"></a>创建自己的异常对象</h2><p>SUN提供的JDK内置的异常肯定是不够的用的。在实际的开发中，有很多业务，这些业务出现异常之后，JDK中都是没有的。和业务挂钩的。那么异常类我们程序员可以自己定义吗？</p>
+<p>可以。</p>
+<p>语法很简单，参照源代码的异常创建方式即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">第一步：编写一个类继承Exception或者RuntimeException.</span><br><span class="line">第二步：提供两个构造方法，一个无参数的，一个带有String参数的。</span><br><span class="line"></span><br><span class="line">编译时异常：</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyException</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyException</span><span class="params">(String s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">运行时异常</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="利用自己创建的异常"><a href="#利用自己创建的异常" class="headerlink" title="利用自己创建的异常"></a>利用自己创建的异常</h3><p>在前面的笔记中我们写了一个作业：<br>运用数组去模拟栈结构，并完成压栈和弹栈操作<br>当栈满时再压栈便会触发异常，这个时候我们可以自己定义一个异常并在这个时候抛出异常！从而完成提醒异常的目的！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(Object obj)</span> <span class="keyword">throws</span> MyStackOperationException </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(index &gt;= elements.length - <span class="number">1</span>)&#123;</span><br><span class="line">		改良之前</span><br><span class="line">		System.out.println(<span class="string">&quot;压栈失败，栈已满！&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">		</span><br><span class="line">		改良之后</span><br><span class="line">        创建异常对象</span><br><span class="line">        MyStackOperationException e = <span class="keyword">new</span> MyStackOperationException(<span class="string">&quot;压栈失败，栈已满！&quot;</span>);</span><br><span class="line">        手动将异常抛出去！</span><br><span class="line">        <span class="keyword">throw</span> e;</span><br><span class="line">        这里捕捉没有意义，自己<span class="keyword">new</span>一个异常，自己捉，没有意义。栈已满这个信息你需要传递出去。</span><br><span class="line"></span><br><span class="line">        合并（手动抛出异常！）</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MyStackOperationException(<span class="string">&quot;压栈失败，栈已满！&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        程序能够走到这里，说明栈没满</span><br><span class="line">        向栈中加<span class="number">1</span>个元素，栈帧向上移动一个位置。</span><br><span class="line">        index++;</span><br><span class="line">        elements[index] = obj;</span><br><span class="line">        在声明一次：所有的System.out.println()方法执行时，如果输出引用的话，自动调用引用的toString()方法。</span><br><span class="line">        System.out.println(<span class="string">&quot;压栈&quot;</span> + obj + <span class="string">&quot;元素成功，栈帧指向&quot;</span> + index);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="方法覆盖与异常"><a href="#方法覆盖与异常" class="headerlink" title="方法覆盖与异常"></a>方法覆盖与异常</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">之前在讲解方法覆盖的时候，当时遗留了一个问题？</span><br><span class="line">重写之后的方法不能比重写之前的方法抛出更多（更宽泛）的异常，可以更少。</span><br><span class="line">一般来说覆盖直接复制粘贴就可！</span><br></pre></td></tr></table></figure>
+
+<hr>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>老板给我点份可乐吧！</div>
+  <button onclick="document.getElementById('post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div id="post-reward">
+      
+      <div>
+        <img src="/images/wechatpay.png" alt="WHY 微信">
+        <p>微信</p>
+      </div>
+      
+      <div>
+        <img src="/images/alipay.png" alt="WHY 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/code-study/" rel="tag"># code_study</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/14/java_study_16/" rel="prev" title="JAVA学习笔记16-（日期，随机数，枚举）">
+      <i class="fa fa-chevron-left"></i> JAVA学习笔记16-（日期，随机数，枚举）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/16/java_study_18/" rel="next" title="JAVA学习笔记18-（集合①）">
+      JAVA学习笔记18-（集合①） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WHY</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">88k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:20</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>-->
+
+  <div class="powered-by">
+  <i class="fa fa-user-md"></i>
+  <span id="busuanzi_container_site_uv">
+    本站总访客数:<span id="busuanzi_value_site_uv"></span>&nbsp;&nbsp;| 
+  </span>
+  <span id="busuanzi_container_site_pv">
+      &nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  </div>
+  </div>
+  
+  <script>
+      var now = new Date(); 
+      function createtime() { 
+          var grt= new Date("03/12/2019 12:00:00");//此处修改你的建站时间或者网站上线时间 
+          now.setTime(now.getTime()+250); 
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+      } 
+  setInterval("createtime()",250);
+  </script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

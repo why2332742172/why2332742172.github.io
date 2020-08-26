@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1.0.2/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="访问控制权限&#x2F;Object类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA学习笔记10-（访问控制权限&#x2F;Object类）">
+<meta property="og:url" content="http://yoursite.com/2020/08/08/java_study_10/index.html">
+<meta property="og:site_name" content="WhyBlog">
+<meta property="og:description" content="访问控制权限&#x2F;Object类">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200809125659734.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200809125743270.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200809125909795.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTQ0MzM1,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200809130406585.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTQ0MzM1,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200809130652977.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200809130811446.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTQ0MzM1,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-08-07T23:30:22.000Z">
+<meta property="article:modified_time" content="2020-08-09T05:32:58.132Z">
+<meta property="article:author" content="WHY">
+<meta property="article:tag" content="code_study">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200809125659734.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/08/08/java_study_10/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JAVA学习笔记10-（访问控制权限/Object类） | WhyBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">WhyBlog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">努力学习的宇雨的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E6%9D%83%E9%99%90"><span class="nav-number">1.</span> <span class="nav-text">访问控制权限</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E6%9D%83%E9%99%90%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">1.1.</span> <span class="nav-text">访问控制权限都有哪些?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%8F%E4%B8%AA%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6%E7%9A%84%E8%8C%83%E5%9B%B4%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.2.</span> <span class="nav-text">每个访问控制权限控制的范围是什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6%E5%8F%AF%E4%BB%A5%E4%BF%AE%E9%A5%B0%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">访问控制权限修饰符可以修饰什么？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JDK%E7%B1%BB%E5%BA%93%E7%9A%84%E6%A0%B9%E7%B1%BB%EF%BC%9AObject"><span class="nav-number">2.</span> <span class="nav-text">JDK类库的根类：Object</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%8F%8AAPI%E6%96%87%E6%A1%A3%E6%A6%82%E8%BF%B0"><span class="nav-number">2.1.</span> <span class="nav-text">源码及API文档概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">Object中的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Object%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E2%80%93toString%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.1.</span> <span class="nav-text">Object中的方法–toString方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E2%80%93equals%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.2.</span> <span class="nav-text">Object中的方法–equals方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E2%80%93finalize%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.3.</span> <span class="nav-text">Object中的方法–finalize方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E2%80%93hashCode%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.4.</span> <span class="nav-text">Object中的方法–hashCode方法</span></a></li></ol></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+  <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=27588021&auto=1&height=66"></iframe>
+      </iframe>
+  </div>
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WHY"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">WHY</p>
+  <div class="site-description" itemprop="description">努力学习的宇雨的博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/why2332742172" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;why2332742172" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2332742172@qq.com" title="E-Mail → mailto:2332742172@qq.com" rel="noopener" target="_blank"><i class="fab fa-envelope-o fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/qq_46144335" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_46144335" rel="noopener" target="_blank"><i class="fab fa-delicious fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/08/java_study_10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="WHY">
+      <meta itemprop="description" content="努力学习的宇雨的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WhyBlog">
+    </span>
+
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JAVA学习笔记10-（访问控制权限/Object类）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-08 07:30:22" itemprop="dateCreated datePublished" datetime="2020-08-08T07:30:22+08:00">2020-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-09 13:32:58" itemprop="dateModified" datetime="2020-08-09T13:32:58+08:00">2020-08-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">JAVA学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>访问控制权限/Object类</p>
+<a id="more"></a>
+
+
+
+<hr>
+<h1 id="访问控制权限"><a href="#访问控制权限" class="headerlink" title="访问控制权限"></a>访问控制权限</h1><hr>
+<h2 id="访问控制权限都有哪些"><a href="#访问控制权限都有哪些" class="headerlink" title="访问控制权限都有哪些?"></a>访问控制权限都有哪些?</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span>	私有</span><br><span class="line"><span class="keyword">public</span>	公开</span><br><span class="line"><span class="keyword">protected</span>	受保护</span><br><span class="line">			默认（也就是前面啥也不写）</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="每个访问控制权限控制的范围是什么"><a href="#每个访问控制权限控制的范围是什么" class="headerlink" title="每个访问控制权限控制的范围是什么?"></a>每个访问控制权限控制的范围是什么?</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> 表示私有的，只能在本类中访问</span><br><span class="line"><span class="keyword">public</span> 表示公开的，在任何位置都可以访问</span><br><span class="line">“默认”表示只能在本类，以及同包下访问。</span><br><span class="line"><span class="keyword">protected</span>表示只能在本类、同包、子类中访问。</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>访问控制修饰符</th>
+<th>本类</th>
+<th>同包</th>
+<th>子类</th>
+<th>任意位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>public</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>默认</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>private</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">范围从大到小排序：<span class="keyword">public</span> &gt; <span class="keyword">protected</span> &gt; 默认 &gt; <span class="keyword">private</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="访问控制权限修饰符可以修饰什么？"><a href="#访问控制权限修饰符可以修饰什么？" class="headerlink" title="访问控制权限修饰符可以修饰什么？"></a>访问控制权限修饰符可以修饰什么？</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">属性（<span class="number">4</span>个都能用）</span><br><span class="line">方法（<span class="number">4</span>个都能用）</span><br><span class="line">类（<span class="keyword">public</span>和默认能用，其它不行。）</span><br><span class="line">接口（<span class="keyword">public</span>和默认能用，其它不行。）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="JDK类库的根类：Object"><a href="#JDK类库的根类：Object" class="headerlink" title="JDK类库的根类：Object"></a>JDK类库的根类：Object</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">首先我们要知道：</span><br><span class="line">任何一个类默认继承Object。就算没有直接继承，最终也会间接继承。</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="源码及API文档概述"><a href="#源码及API文档概述" class="headerlink" title="源码及API文档概述"></a>源码及API文档概述</h2><blockquote>
+<p>什么是API？<br>应用程序编程接口。（Application Program Interface）<br>整个JDK的类库就是一个javase的API。<br>每一个API都会配置一套API帮助文档。<br>SUN公司提前写好的这套类库就是API。（一般每一份API都对应一份API帮助文档。）</p>
+</blockquote>
+<blockquote>
+<p>如何去查看API？<br><img src="https://img-blog.csdnimg.cn/20200809125659734.png" alt="1"><br><img src="https://img-blog.csdnimg.cn/20200809125743270.png" alt="2"><br>这里面便是全部java的API，他的帮助文档则可以在网上查阅得知，类容如下<br><img src="https://img-blog.csdnimg.cn/20200809125909795.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTQ0MzM1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<hr>
+<h2 id="Object中的方法"><a href="#Object中的方法" class="headerlink" title="Object中的方法"></a>Object中的方法</h2><p>目前为止我们只需要知道这几个方法即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">clone</span><span class="params">()</span>   <span class="comment">// 负责对象克隆的。</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span>	<span class="comment">// 获取对象哈希值的一个方法。</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span>  <span class="comment">// 判断两个对象是否相等</span></span></span><br><span class="line"><span class="function">String <span class="title">toString</span><span class="params">()</span>  <span class="comment">// 将对象转换成字符串形式</span></span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span>  <span class="comment">// 垃圾回收器负责调用的方法</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Object中的方法–toString方法"><a href="#Object中的方法–toString方法" class="headerlink" title="Object中的方法–toString方法"></a>Object中的方法–toString方法</h3><p>1、源代码长什么样？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.getClass().getName() + <span class="string">&quot;@&quot;</span> + Integer.toHexString(hashCode());</span><br><span class="line">&#125;</span><br><span class="line">源代码上toString()方法的默认实现是：类名@对象的内存地址转换为十六进制再结合哈希算法得到的值的形式</span><br></pre></td></tr></table></figure>
+<p>2、toString()方法的作用是什么？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">toString()方法的设计目的是：</span><br><span class="line">通过调用这个方法可以将一个“java对象”转换成“字符串表示形式”</span><br></pre></td></tr></table></figure>
+<p>3、<strong>其实SUN公司开发java语言的时候，建议所有的子类都去重写toString()方法。toString()方法应该是一个简洁的、详实的、易阅读的.</strong><br><img src="https://img-blog.csdnimg.cn/20200809130406585.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTQ0MzM1,size_16,color_FFFFFF,t_70" alt="23"><br>4、在IDEA中如何使用？<br>在IDEA中能够自动为我们生成相应的覆盖toString方法，具体步骤如下：</p>
+<blockquote>
+<p>首先在类中同时按下键盘的 alt+insert 键，出现下图<br><img src="https://img-blog.csdnimg.cn/20200809130652977.png" alt="在这里插入图片描述"><br>然后选择 Override Methods中的toString<br><img src="https://img-blog.csdnimg.cn/20200809130811446.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ2MTQ0MzM1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>接下来就会自动生成了，在此基础上改为自己想要的样子即可。<br>观察可以发现，他同样可以自动生成 equals ，clone等方法，在后面就不再赘述。</p>
+</blockquote>
+<hr>
+<h3 id="Object中的方法–equals方法"><a href="#Object中的方法–equals方法" class="headerlink" title="Object中的方法–equals方法"></a>Object中的方法–equals方法</h3><p>1、equals方法的源代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2、equals方法的目的是什么？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">以后编程的过程当中，都要通过equals方法来判断两个对象是否相等。</span><br><span class="line">equals方法是判断两个对象是否相等的。</span><br></pre></td></tr></table></figure>
+<p>3、Object类给的这个默认的equals方法够不够用？</p>
+<blockquote>
+<p>首先我们知道，在JAVA中去判断两个基本数据类型是否相等时，直接使用的是  ==  这个符号，例如：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">	<span class="comment">// 判断两个基本数据类型的数据是否相等直接使用“==”就行。</span></span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">100</span>;</span><br><span class="line">	<span class="keyword">int</span> b = <span class="number">100</span>;</span><br><span class="line">	<span class="keyword">if</span>(a == b)</span><br><span class="line">		System.out.println(yes);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>那么问题来了，如何去判断两个对象是否相等，我们怎么办？能直接使用“==”吗？</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">首先新建一个类:MyTime,里面包含年月日</span><br><span class="line">为了方便，不对其进行封装。</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTime</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> year;</span><br><span class="line">	<span class="keyword">int</span> month;</span><br><span class="line">	<span class="keyword">int</span> day;</span><br><span class="line">	<span class="comment">//提供构造方法</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyTime</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyTime</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.year = year;</span><br><span class="line">		<span class="keyword">this</span>.month = month;</span><br><span class="line">		<span class="keyword">this</span>.day = day;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个时候在主函数中去创建两个对象，令他们的 年月日 一样，那么我们可以认为这两个对象时相等（equal）的，但是直接用 == 可以吗？</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MyTime t1 = <span class="keyword">new</span> MyTime(<span class="number">2008</span>, <span class="number">8</span>, <span class="number">8</span>); <span class="comment">//MyTime t1 = 0x1234;</span></span><br><span class="line">MyTime t2 = <span class="keyword">new</span> MyTime(<span class="number">2008</span>, <span class="number">8</span>, <span class="number">8</span>); <span class="comment">//MyTime t2 = 0x3698;</span></span><br><span class="line">System.out.println(t1 == t2); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>很显然不行，因为t1和t2是两个引用，他们保存的是对象的地址！<br>“==”符号是判断左右两边变量的值是否相等，就算对象内容相同，但是两个对象自然对应着两块不同的内存，所以equals方法在这里失效了（或者是没满足我们的要求）<br>在前面提到，当父类之中的方法无法满足子类的需求时，便需要对其进行覆盖重写。<br>equals到底应该怎么重写？你自己定，你认为两个对象什么相等的时候表示相等，你就怎么重写。（这个相等的标准是人为定的）</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span>&#123;</span><br><span class="line">	<span class="comment">// 当年相同，月相同，并且日也相同的时候，表示两个日期相同。两个对象相等。</span></span><br><span class="line">	<span class="keyword">if</span>(obj == <span class="keyword">null</span> || !(obj <span class="keyword">instanceof</span> MyTime))&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span> == obj)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	MyTime t = (MyTime)obj;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.year == t.year &amp;&amp; <span class="keyword">this</span>.month == t.month &amp;&amp; <span class="keyword">this</span>.day == t.day ;</span><br><span class="line">&#125;</span><br><span class="line">具体类容如上，学了前面的自然也看得懂，不再解释，同上toString方法，在IDEA中也能够自动生成。</span><br></pre></td></tr></table></figure>
+<p>根据上述分析得出结论：Object类给的默认equals方法也是不够用的，用的时候建议覆盖重写。</p>
+<p>4、总结equals</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java中基本数据类型比较是否相等，使用==</span><br><span class="line">java中所有的引用数据类型统一使用equals方法来判断是否相等。</span><br></pre></td></tr></table></figure>
+<p>值得注意的是，String类中JAVA已经为我们写好了equals的重写方法，直接调用即可比较两字符串是否相等。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String a = <span class="string">&quot;aaa&quot;</span>;</span><br><span class="line">String b = <span class="string">&quot;bbb&quot;</span>;</span><br><span class="line"><span class="keyword">boolean</span> flag = a.equals(b);<span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="Object中的方法–finalize方法"><a href="#Object中的方法–finalize方法" class="headerlink" title="Object中的方法–finalize方法"></a>Object中的方法–finalize方法</h3><p>1、在Object类中的源代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123; &#125;</span><br><span class="line">要知道的是</span><br><span class="line">该方法在最新的jdk已经过时了，此方法不重要，了解即可</span><br><span class="line">该方法不是由程序员手动调动的，是由GC（垃圾回收器）自动调用的</span><br></pre></td></tr></table></figure>
+<p>2、finalize()方法的执行时机：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当一个java对象即将被垃圾回收器回收的时候，垃圾回收器负责调用finalize()方法。</span><br></pre></td></tr></table></figure>
+<p>3、提示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java中的垃圾回收器不是轻易启动的</span><br><span class="line">垃圾太少，或者时间没到，种种条件下，有可能启动，也有可能不启动。</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="Object中的方法–hashCode方法"><a href="#Object中的方法–hashCode方法" class="headerlink" title="Object中的方法–hashCode方法"></a>Object中的方法–hashCode方法</h3><p>在Object中的hashCode方法是怎样的？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line">这个方法不是抽象方法，带有<span class="keyword">native</span>关键字，底层调用C++程序。</span><br><span class="line">hashCode()方法返回的是哈希码：</span><br><span class="line">	实际上就是一个java对象的内存地址，经过哈希算法，得出的一个值。</span><br><span class="line">	所以hashCode()方法的执行结果可以等同看做一个java对象的内存地址。</span><br></pre></td></tr></table></figure>
+
+<hr>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>老板给我点份可乐吧！</div>
+  <button onclick="document.getElementById('post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div id="post-reward">
+      
+      <div>
+        <img src="/images/wechatpay.png" alt="WHY 微信">
+        <p>微信</p>
+      </div>
+      
+      <div>
+        <img src="/images/alipay.png" alt="WHY 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/code-study/" rel="tag"># code_study</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/07/java_study_9/" rel="prev" title="JAVA学习笔记9-（接口和package和import）">
+      <i class="fa fa-chevron-left"></i> JAVA学习笔记9-（接口和package和import）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/09/java_study_11/" rel="next" title="JAVA学习笔记11-（匿名内部类）">
+      JAVA学习笔记11-（匿名内部类） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WHY</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">88k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:20</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>-->
+
+  <div class="powered-by">
+  <i class="fa fa-user-md"></i>
+  <span id="busuanzi_container_site_uv">
+    本站总访客数:<span id="busuanzi_value_site_uv"></span>&nbsp;&nbsp;| 
+  </span>
+  <span id="busuanzi_container_site_pv">
+      &nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  </div>
+  </div>
+  
+  <script>
+      var now = new Date(); 
+      function createtime() { 
+          var grt= new Date("03/12/2019 12:00:00");//此处修改你的建站时间或者网站上线时间 
+          now.setTime(now.getTime()+250); 
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+      } 
+  setInterval("createtime()",250);
+  </script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
